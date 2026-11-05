@@ -2,7 +2,7 @@
 
 A full-site UI redesign of [glasgowtigers.co.uk](https://glasgowtigers.co.uk), the official site of Glasgow Tigers Speedway. It is a static, dependency-free build (HTML, CSS, vanilla JS) that uses the club's real 2026 content: results, riders, news, officials, honours, hospitality and travel information.
 
-> Concept work. Images and logos are hot-linked from the live site and belong to Glasgow Tigers and their partners. Forms are front-end demos and send nothing.
+> Concept work. Images and logos are hot-linked from the live site and belong to Glasgow Tigers and their partners. Forms are front-end demos and send nothing. The shop bag is a front-end demo saved in the visitor's browser; checkout is switched off.
 
 ## Pages
 
@@ -16,6 +16,7 @@ A full-site UI redesign of [glasgowtigers.co.uk](https://glasgowtigers.co.uk), t
 | Hospitality & Partners | `docs/hospitality.html` | Hospitality, Our Partners, Sponsorship |
 | Fans | `docs/fans.html` | Supporters Group, Newsletter, Get Involved |
 | Contact | `docs/contact.html` | Contact |
+| Shop | `docs/shop.html` | Tigers Shop (Kids, Adults, Accessories, Clearance) |
 
 ## Run it
 
@@ -70,6 +71,24 @@ Mobbin's web catalogue has few sports-club sites, so the strongest references ca
 | Oversized condensed hero type with a logo band below | [The Performance Lab: hero](https://mobbin.com/sites/sections/abf8940e-4964-4058-8cc8-4ab89f147c70) | Homepage hero and partner marquee |
 | Featured story card over imagery | [Glide: featured story](https://mobbin.com/sites/sections/ff98095f-0934-45a5-93ce-a4c634c18784) | News feature card |
 | Lead story plus stacked secondary stories | [The New York Times](https://mobbin.com/screens/77726ae0-a813-4887-ae3c-12ae8f20b432) | Homepage news grid |
+
+## Shop
+
+`docs/shop.html` puts the shop inside the site instead of handing fans off to a separate WooCommerce theme. All 24 products, prices, sale prices, sizes and stock levels are mirrored from the club's live store (`docs/assets/js/products.js`).
+
+- Category filters with counts (All, Adults, Kids, Accessories, Sale) and sorting by price or biggest saving
+- Product cards with sale badge, second photo on hover, and a sold-out state
+- Product view in a native `<dialog>` (bottom sheet on phones): photo gallery, size or gift-card amount buttons, quantity stepper, and an inline "Please choose a size" error
+- Bag drawer on every page with a live count in the header, quantity controls, remove, subtotal and an "Added to bag" toast that pauses while hovered or focused
+- Deep links: `shop.html#p-31766` opens a product directly (used by the homepage shirt tile)
+
+In production the bag would hand off to the club's existing WooCommerce checkout (via the Store API cart endpoints), so payments, stock and orders stay where they are today.
+
+| Pattern | Reference |
+|---|---|
+| Product page: gallery left, size pills, quantity stepper and Add to cart | [Dollar Shave Club: product](https://mobbin.com/screens/d8041b4c-f60e-476c-a013-092cc71dff58) |
+| Cart drawer with quantity controls, subtotal and an added-to-cart toast | [Dollar Shave Club: cart](https://mobbin.com/screens/41117564-268d-4be4-8a68-67f1203b05e6) |
+| Category headline with sub-category tabs and product count | [H&M: category](https://mobbin.com/screens/b501ce82-b239-4e20-a7f7-a6f24354f197) |
 
 ## Design system
 

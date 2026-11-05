@@ -33,33 +33,119 @@
     if (!e.target.closest(".nav-item")) $$(".nav-item.open").forEach(i => { i.classList.remove("open"); $("button", i).setAttribute("aria-expanded", "false"); });
   });
 
-  /* ---------- Mobile drawer ---------- */
-  const drawer = $("#drawer");
-  const toggle = $(".menu-toggle");
-  if (drawer && toggle) {
+  /* ---------- Drawers (mobile menu, bag) ---------- */
+  const makeDrawer = (drawer, openers, closers) => {
     const panel = $(".drawer-panel", drawer);
-    const open = () => {
+    let opener = null;
+    const open = from => {
+      opener = from || document.activeElement;
       drawer.classList.add("open"); drawer.removeAttribute("inert");
-      toggle.setAttribute("aria-expanded", "true"); document.body.classList.add("no-scroll");
-      $(".drawer-close", drawer).focus();
+      openers.forEach(o => o.setAttribute("aria-expanded", "true")); document.body.classList.add("no-scroll");
+      closers[closers.length - 1].focus();
     };
     const close = () => {
       drawer.classList.remove("open"); drawer.setAttribute("inert", "");
-      toggle.setAttribute("aria-expanded", "false"); document.body.classList.remove("no-scroll");
-      toggle.focus();
+      openers.forEach(o => o.setAttribute("aria-expanded", "false")); document.body.classList.remove("no-scroll");
+      if (opener && opener.isConnected) opener.focus();
     };
-    toggle.addEventListener("click", open);
-    $(".drawer-close", drawer).addEventListener("click", close);
-    $(".drawer-scrim", drawer).addEventListener("click", close);
+    openers.forEach(o => o.addEventListener("click", () => open(o)));
+    closers.forEach(c => c.addEventListener("click", close));
     drawer.addEventListener("keydown", e => {
       if (e.key === "Escape") close();
       if (e.key === "Tab") {
-        const f = $$("a, button, summary, input", panel).filter(x => x.offsetParent);
+        const f = $$("a, button, summary, input, select", panel).filter(x => x.offsetParent && !x.disabled);
         if (e.shiftKey && document.activeElement === f[0]) { e.preventDefault(); f[f.length - 1].focus(); }
         else if (!e.shiftKey && document.activeElement === f[f.length - 1]) { e.preventDefault(); f[0].focus(); }
       }
     });
+    return { open, close };
+  };
+  const menu = $("#drawer");
+  if (menu) makeDrawer(menu, $$(".menu-toggle"), [$(".drawer-scrim", menu), $(".drawer-close", menu)]);
+
+  /* ---------- Bag (front-end demo; persisted per browser) ---------- */
+  const money = p => "£" + (p / 100).toFixed(2);
+  const cartEl = $("#cart");
+  const store = {
+    get() { try { return JSON.parse(localStorage.getItem("gt-bag")) || []; } catch { return []; } },
+    set(items) { try { localStorage.setItem("gt-bag", JSON.stringify(items)); } catch { /* storage unavailable: bag lasts for this page only */ } }
+  };
+  let bag = store.get();
+  const cartDrawer = cartEl && makeDrawer(cartEl, $$("[data-open-cart]"), $$("[data-close-cart]", cartEl));
+  const toastEl = $("[data-toast]");
+  let toastTimer;
+  const hideToastSoon = () => { clearTimeout(toastTimer); toastTimer = setTimeout(() => toastEl.classList.remove("show"), 6000); };
+  const toast = html => {
+    if (!toastEl) return;
+    toastEl.innerHTML = html; toastEl.classList.add("show");
+    hideToastSoon();
+  };
+  if (toastEl) {
+    // Hold the toast while the visitor is pointing at it or tabbing through it
+    ["mouseenter", "focusin"].forEach(ev => toastEl.addEventListener(ev, () => clearTimeout(toastTimer)));
+    ["mouseleave", "focusout"].forEach(ev => toastEl.addEventListener(ev, hideToastSoon));
   }
+
+  const renderBag = () => {
+    const count = bag.reduce((n, i) => n + i.qty, 0);
+    $$("[data-cart-count]").forEach(b => { b.textContent = count; b.hidden = !count; });
+    $$("[data-cart-label]").forEach(l => { l.textContent = count ? `Bag, ${count} item${count === 1 ? "" : "s"}` : "Bag, empty"; });
+    if (!cartEl) return;
+    $("#cart-title").textContent = count ? `Your bag (${count})` : "Your bag";
+    const list = $("[data-cart-items]", cartEl);
+    $("[data-cart-foot]", cartEl).hidden = !count;
+    if (!count) {
+      list.innerHTML = `<div class="cart-empty"><span class="icon">${icon("cart")}</span><p><strong>Your bag is empty.</strong><br>Replica shirts, jackets and gifts are waiting.</p><a class="btn" href="shop.html">Browse the shop</a></div>`;
+      return;
+    }
+    list.innerHTML = `<ul class="cart-list">${bag.map((i, n) => `
+      <li class="cart-item">
+        <img src="${i.img}" alt="" width="80" height="80">
+        <div class="cart-item-info">
+          <b>${i.name}</b>
+          ${i.option ? `<span class="hint">${i.option}</span>` : ""}
+          <div class="stepper" role="group" aria-label="Quantity of ${i.name}">
+            <button type="button" data-dec="${n}" aria-label="Decrease quantity">−</button>
+            <output aria-live="polite">${i.qty}</output>
+            <button type="button" data-inc="${n}" aria-label="Increase quantity">+</button>
+          </div>
+        </div>
+        <div class="cart-item-side">
+          <b>${money(i.price * i.qty)}</b>
+          <button type="button" class="link-btn" data-remove="${n}">Remove<span class="sr-only"> ${i.name}</span></button>
+        </div>
+      </li>`).join("")}</ul>`;
+    $("[data-cart-subtotal]", cartEl).textContent = money(bag.reduce((s, i) => s + i.price * i.qty, 0));
+  };
+
+  if (cartEl) {
+    cartEl.addEventListener("click", e => {
+      const t = e.target.closest("button"); if (!t) return;
+      const n = +(t.dataset.inc ?? t.dataset.dec ?? t.dataset.remove);
+      if (t.dataset.inc) bag[n].qty = Math.min(bag[n].qty + 1, 10);
+      else if (t.dataset.dec) bag[n].qty > 1 ? bag[n].qty-- : bag.splice(n, 1);
+      else if (t.dataset.remove) bag.splice(n, 1);
+      else if (t.hasAttribute("data-checkout")) { $("[data-checkout-note]", cartEl).hidden = false; return; }
+      else return;
+      store.set(bag); renderBag();
+      const again = $(`[data-${t.dataset.inc ? "inc" : "dec"}="${n}"]`, cartEl) || $("[data-close-cart]:not(.drawer-scrim)", cartEl);
+      again && again.focus();
+    });
+  }
+
+  window.TigersBag = {
+    money,
+    add(item) {
+      const key = `${item.id}|${item.option || ""}`;
+      const found = bag.find(i => i.key === key);
+      found ? found.qty = Math.min(found.qty + item.qty, 10) : bag.push({ ...item, key });
+      store.set(bag); renderBag();
+      toast(`${icon("check")}<span><b>Added to bag</b> ${item.name}${item.option ? `, ${item.option}` : ""}</span><button type="button" class="btn btn--sm btn--gold" data-open-cart-toast>View bag</button>`);
+      const v = $("[data-open-cart-toast]", toastEl);
+      v && v.addEventListener("click", () => { toastEl.classList.remove("show"); cartDrawer.open($("[data-open-cart]")); });
+    }
+  };
+  renderBag();
 
   /* ---------- Season stats strip ---------- */
   $$("[data-season-stats]").forEach(el => {

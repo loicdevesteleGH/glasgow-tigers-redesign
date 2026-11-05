@@ -1,0 +1,46 @@
+<!-- title: Shop | Glasgow Tigers Speedway -->
+<!-- description: Official Glasgow Tigers merchandise: 2026 replica shirts, jackets, scarves, hats, gifts and gift cards. -->
+<!-- nav: shop -->
+<!-- scripts: products.js shop.js -->
+<main id="main">
+  <section class="page-hero shop-hero">
+    <div class="hero-media"><img src="https://glasgowtigers.co.uk/wp-content/uploads/2026/05/Red-Puffer-Jacket-KJP.jpg" alt=""></div>
+    <div class="container page-hero-inner">
+      <ol class="breadcrumbs"><li><a href="index.html">Home</a></li><li aria-current="page">Shop</li></ol>
+      <h1 class="display h-xl">Tigers Shop</h1>
+      <p class="lead">Official 2026 kit, race-night layers and gifts for every Tigers fan. Up to 20% off selected clothing.</p>
+    </div>
+  </section>
+
+  <section class="section shop-section">
+    <div class="container">
+      <div class="shop-toolbar">
+        <div class="chips shop-cats" role="group" aria-label="Filter by category" data-shop-cats></div>
+        <div class="shop-sort">
+          <label for="sort" class="meta">Sort</label>
+          <select class="select" id="sort" data-shop-sort>
+            <option value="featured">Featured</option>
+            <option value="low">Price: low to high</option>
+            <option value="high">Price: high to low</option>
+            <option value="sale">Biggest saving</option>
+          </select>
+        </div>
+      </div>
+      <p class="meta" data-shop-count aria-live="polite" style="margin-bottom:20px"></p>
+      <ul class="product-grid" data-shop-grid></ul>
+    </div>
+  </section>
+
+  <section class="section--tight section--white">
+    <div class="container shop-perks">
+      <div class="perk"><span class="ico"><svg aria-hidden="true"><use href="#i-cart"/></svg></span><div><b>Not sure what to get?</b><p><a href="#p-25426">Gift cards</a> from £10, to spend on anything in the shop.</p></div></div>
+      <div class="perk"><span class="ico"><svg aria-hidden="true"><use href="#i-mail"/></svg></span><div><b>Order questions?</b><p><a href="mailto:info@glasgowtigers.co.uk">info@glasgowtigers.co.uk</a> or <a href="tel:08009160046">0800 916 0046</a></p></div></div>
+      <div class="perk"><span class="ico"><svg aria-hidden="true"><use href="#i-check"/></svg></span><div><b>Every sale supports the club</b><p>Profits go back into the Tigers and the community.</p></div></div>
+    </div>
+  </section>
+
+  <dialog class="pdp" id="product" aria-labelledby="pdp-name">
+    <form method="dialog" class="pdp-close"><button class="icon-btn" aria-label="Close product"><svg aria-hidden="true"><use href="#i-close"/></svg></button></form>
+    <div class="pdp-inner" data-pdp></div>
+  </dialog>
+</main>

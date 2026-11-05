@@ -74,7 +74,8 @@
     <div class="header-actions">
       <a class="icon-btn hide-mobile" href="https://tv.glasgowtigers.co.uk/" aria-label="Tigers TV"><svg aria-hidden="true"><use href="#i-tv"/></svg></a>
       <a class="icon-btn" href="https://glasgowtigers.co.uk/my-account/" aria-label="My account"><svg aria-hidden="true"><use href="#i-user"/></svg></a>
-      <a class="btn btn--sm hide-mobile" href="https://glasgowtigers.co.uk/tigers-shop/"><svg aria-hidden="true"><use href="#i-cart"/></svg>Shop</a>
+      <a class="btn btn--sm hide-mobile" data-nav="shop" href="shop.html">Shop</a>
+      <button class="icon-btn cart-btn" data-open-cart aria-controls="cart" aria-expanded="false"><svg aria-hidden="true"><use href="#i-cart"/></svg><span class="cart-count" data-cart-count hidden></span><span class="sr-only" data-cart-label>Bag, empty</span></button>
       <button class="icon-btn menu-toggle" aria-expanded="false" aria-controls="drawer" aria-label="Open menu"><svg aria-hidden="true"><use href="#i-menu"/></svg></button>
     </div>
   </div>
@@ -117,12 +118,32 @@
           <li><a href="fans.html#get-involved">Get Involved</a></li>
         </ul>
       </details>
+      <a href="shop.html">Shop</a>
       <a href="hospitality.html#partners">Partners</a>
       <a href="contact.html">Contact</a>
     </nav>
     <div class="drawer-foot">
-      <a class="btn" href="https://glasgowtigers.co.uk/tigers-shop/"><svg aria-hidden="true"><use href="#i-cart"/></svg>Shop</a>
+      <a class="btn" href="shop.html"><svg aria-hidden="true"><use href="#i-cart"/></svg>Shop</a>
       <a class="btn btn--ghost light" href="https://tv.glasgowtigers.co.uk/"><svg aria-hidden="true"><use href="#i-tv"/></svg>Tigers TV</a>
     </div>
   </div>
 </div>
+
+<div class="drawer cart-drawer" id="cart" inert>
+  <div class="drawer-scrim" data-close-cart></div>
+  <div class="drawer-panel cart-panel" role="dialog" aria-modal="true" aria-labelledby="cart-title">
+    <div class="drawer-head">
+      <h2 id="cart-title" class="display h-sm">Your bag</h2>
+      <button class="icon-btn" data-close-cart aria-label="Close bag"><svg aria-hidden="true"><use href="#i-close"/></svg></button>
+    </div>
+    <div class="cart-body" data-cart-items></div>
+    <div class="cart-foot" data-cart-foot hidden>
+      <div class="cart-total"><span>Subtotal</span><b data-cart-subtotal>£0.00</b></div>
+      <p class="hint">Delivery calculated at checkout.</p>
+      <button class="btn" type="button" data-checkout>Checkout <svg aria-hidden="true"><use href="#i-arrow"/></svg></button>
+      <p class="checkout-note" data-checkout-note hidden>This is a design concept, so checkout is switched off. In production this button hands your bag to the club's secure checkout.</p>
+    </div>
+  </div>
+</div>
+
+<div class="toast" role="status" aria-live="polite" data-toast></div>

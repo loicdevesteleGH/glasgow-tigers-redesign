@@ -22,5 +22,8 @@ for page in sorted((SRC / "pages").glob("*.html")):
         header = header.replace(f'data-nav="{nav}" href', f'data-nav="{nav}" aria-current="page" href')
         header = header.replace(f'class="nav-link" data-nav="{nav}" aria-expanded', f'class="nav-link is-current" data-nav="{nav}" aria-expanded')
 
-    (OUT / page.name).write_text(head + header + body + partials["footer"])
+    scripts = "".join(f'<script src="assets/js/{name}"></script>\n' for name in meta.get("scripts", "").split())
+    footer = partials["footer"].replace("{{page_scripts}}\n", scripts)
+
+    (OUT / page.name).write_text(head + header + body + footer)
     print(f"built docs/{page.name}")
