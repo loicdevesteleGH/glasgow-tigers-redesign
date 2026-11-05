@@ -1,0 +1,52 @@
+<!-- title: Match Centre | Glasgow Tigers Speedway -->
+<!-- description: Every 2026 Glasgow Tigers result, with aggregates, form and season record. 2027 fixtures coming soon. -->
+<!-- nav: matches -->
+<main id="main">
+  <section class="page-hero">
+    <div class="hero-media"><img src="https://glasgowtigers.co.uk/wp-content/uploads/2026/09/GLASCUN_15-scaled-e1790414949277.jpg" alt=""></div>
+    <div class="container page-hero-inner">
+      <ol class="breadcrumbs"><li><a href="index.html">Home</a></li><li aria-current="page">Match Centre</li></ol>
+      <h1 class="display h-xl">Match Centre</h1>
+      <p class="lead">Every meeting from the 2026 season, with aggregates and form. 2027 fixtures will be added here when they are confirmed.</p>
+    </div>
+  </section>
+
+  <section class="season-strip" aria-label="2026 season summary">
+    <div class="container" data-season-stats></div>
+  </section>
+
+  <section class="section">
+    <div class="container">
+      <div class="toolbar">
+        <div class="segmented" role="tablist" aria-label="Match Centre views">
+          <button role="tab" id="tab-results" aria-controls="panel-results" aria-selected="true">Results</button>
+          <button role="tab" id="tab-fixtures" aria-controls="panel-fixtures" aria-selected="false" tabindex="-1">Fixtures</button>
+          <button role="tab" id="tab-table" aria-controls="panel-table" aria-selected="false" tabindex="-1">Stats</button>
+        </div>
+      </div>
+
+      <div role="tabpanel" id="panel-results" aria-labelledby="tab-results">
+        <div class="chips" data-comp-chips role="group" aria-label="Filter by competition" style="margin-bottom:12px"></div>
+        <p class="meta" data-results-count aria-live="polite" style="margin-bottom:24px"></p>
+        <div class="results" data-results-full></div>
+      </div>
+
+      <div role="tabpanel" id="panel-fixtures" aria-labelledby="tab-fixtures" hidden>
+        <div class="empty-state">
+          <span class="icon"><svg aria-hidden="true"><use href="#i-calendar"/></svg></span>
+          <h2 class="display h-md">2027 fixtures coming soon</h2>
+          <p class="lead" style="margin-inline:auto">The 2026 season finished on 9 October at Armadale. We'll publish the 2027 calendar as soon as the league confirms it.</p>
+          <a class="btn" href="fans.html#newsletter">Email me when they're out <svg aria-hidden="true"><use href="#i-arrow"/></svg></a>
+        </div>
+      </div>
+
+      <div role="tabpanel" id="panel-table" aria-labelledby="tab-table" hidden>
+        <div class="record-grid" data-record></div>
+        <div class="notice">
+          <svg aria-hidden="true"><use href="#i-info"/></svg>
+          <p>The official Championship league table is published by British Speedway. Draws include the 45-45 at Armadale on 7 August, which Tigers won on a super heat (7-2) to take the aggregate.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>

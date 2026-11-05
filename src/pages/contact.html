@@ -1,0 +1,50 @@
+<!-- title: Contact | Glasgow Tigers Speedway -->
+<!-- description: Contact Glasgow Tigers Speedway by phone, email or the contact form. Stadium and office addresses and opening times. -->
+<!-- nav: contact -->
+<main id="main">
+  <section class="page-hero">
+    <div class="hero-media"><img src="https://glasgowtigers.co.uk/wp-content/uploads/2026/09/HagonBattye-scaled.jpg" alt=""></div>
+    <div class="container page-hero-inner">
+      <ol class="breadcrumbs"><li><a href="index.html">Home</a></li><li aria-current="page">Contact</li></ol>
+      <h1 class="display h-xl">Get in touch</h1>
+      <p class="lead">Questions about race nights, hospitality or the club? We're here to help.</p>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container split" style="align-items:start">
+      <div style="display:grid;gap:20px">
+        <div class="card">
+          <h2>Call or email</h2>
+          <ul class="travel-list">
+            <li class="travel-item"><span class="ico"><svg aria-hidden="true"><use href="#i-phone"/></svg></span><div><b><a href="tel:08009160046">0800 916 0046</a></b><p>Mon to Thu 9am to 3pm · Fri 9am to 5pm<br>Expect slower replies on race days.</p></div></li>
+            <li class="travel-item"><span class="ico"><svg aria-hidden="true"><use href="#i-mail"/></svg></span><div><b><a href="mailto:info@glasgowtigers.co.uk">info@glasgowtigers.co.uk</a></b><p>General enquiries</p></div></li>
+          </ul>
+        </div>
+        <div class="card card--dark">
+          <h2>Addresses</h2>
+          <ul class="travel-list">
+            <li class="travel-item"><span class="ico"><svg aria-hidden="true"><use href="#i-pin"/></svg></span><div><b>Stadium</b><p>The Allied Ashfield Stadium, 404 Hawthorn Street, Glasgow G22 6RU</p></div></li>
+            <li class="travel-item"><span class="ico"><svg aria-hidden="true"><use href="#i-pin"/></svg></span><div><b>Admin office</b><p>230 Balmore Road, Glasgow G22 6LJ</p></div></li>
+          </ul>
+        </div>
+      </div>
+
+      <form class="card form" data-validate aria-labelledby="c-title">
+        <h2 id="c-title">Send us a message</h2>
+        <p class="hint" style="margin:0">Fields marked <span class="req">*</span> are required.</p>
+        <div class="field"><label for="c-name">Full name <span class="req" aria-hidden="true">*</span></label><input class="input" id="c-name" name="name" autocomplete="name" required data-label="name" aria-describedby="c-name-err"><span class="error-msg" id="c-name-err"></span></div>
+        <div class="form-row">
+          <div class="field"><label for="c-email">Email <span class="req" aria-hidden="true">*</span></label><input class="input" id="c-email" type="email" name="email" autocomplete="email" required data-label="email address" aria-describedby="c-email-err"><span class="error-msg" id="c-email-err"></span></div>
+          <div class="field"><label for="c-phone">Phone <span class="req" aria-hidden="true">*</span></label><input class="input" id="c-phone" type="tel" name="phone" autocomplete="tel" required data-label="phone number" aria-describedby="c-phone-err"><span class="error-msg" id="c-phone-err"></span></div>
+        </div>
+        <div class="field"><label for="c-topic">What's it about?</label>
+          <select class="select" id="c-topic" name="topic"><option>General enquiry</option><option>Race night &amp; tickets</option><option>Hospitality</option><option>Sponsorship</option><option>Shop order</option><option>Media</option></select></div>
+        <div class="field"><label for="c-msg">Message <span class="req" aria-hidden="true">*</span></label><textarea class="textarea" id="c-msg" name="message" required data-label="message" aria-describedby="c-msg-err"></textarea><span class="error-msg" id="c-msg-err"></span></div>
+        <label class="check"><input type="checkbox" name="optin"> <span>Send me occasional news, events and offers from Glasgow Tigers.</span></label>
+        <button class="btn" type="submit">Send message <svg aria-hidden="true"><use href="#i-arrow"/></svg></button>
+        <p class="form-status" role="status" tabindex="-1" hidden>Thanks, your message has been sent. (Demo: nothing was sent.)</p>
+      </form>
+    </div>
+  </section>
+</main>
